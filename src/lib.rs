@@ -99,6 +99,20 @@ impl Emu {
         }
     }
 
+    pub fn get_display(&self) -> &[bool] {
+        &self.screen
+    }
+
+    pub fn keypress(&mut self, index: usize, pressed: bool) {
+        self.keys[index] = pressed;
+    }
+
+    pub fn load(&mut self, data: &[u8]) {
+        let start = START_ADDR as usize;
+        let end = start + data.len();
+        self.ram[start..end].copy_from_slice(data);
+    }
+
     fn push(&mut self, value: u16) {
         self.stack[self.sp as usize] = value;
         self.sp += 1;
