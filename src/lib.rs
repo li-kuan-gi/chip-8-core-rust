@@ -325,6 +325,9 @@ impl Emu {
                 let n = digit4 as usize;
                 let mut flipped = false;
 
+                let x = self.v_reg[x] as usize;
+                let y = self.v_reg[y] as usize;
+
                 for delta_y in 0..n {
                     let flips = self.ram[(self.i_reg as usize) + delta_y];
 
@@ -424,7 +427,7 @@ impl Emu {
                 let num = self.v_reg[x];
 
                 for i in 0..3 {
-                    let digit = (num / u8::pow(10, i)) % 10;
+                    let digit = (num / u8::pow(10, 2 - i)) % 10;
                     let addr = (self.i_reg + i as u16) as usize;
                     self.ram[addr] = digit;
                 }
