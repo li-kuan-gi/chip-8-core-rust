@@ -1,3 +1,5 @@
+#![no_std]
+
 pub const SCREEN_WIDTH: usize = 64;
 pub const SCREEN_HEIGHT: usize = 32;
 
@@ -314,7 +316,8 @@ impl Emu {
             (0xC, _, _, _) => {
                 let x = digit2 as usize;
                 let nn = (op & 0x00FF) as u8;
-                let rnd: u8 = rand::random();
+                let mut rng = oorandom::Rand32::new(10);
+                let rnd: u8 = rng.rand_u32() as u8;
                 self.v_reg[x] = rnd & nn;
             }
 
